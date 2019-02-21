@@ -38,17 +38,19 @@ def start():
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
             request's data if necessary.
+            e = {}
+    e.update({"color" : "#FF0000"})
+    e.update({"headType" : "beluga"})
+    e.update({"tailType" : "round-bum"}
+            json.loads(e)
     """
     print(json.dumps(data))
 
     
-    e = {}
-    e.update({"color" : "#FF0000"})
-    e.update({"headType" : "beluga"})
-    e.update({"tailType" : "round-bum"}
+    color = "#FF0000"
     
 
-    return start_response(json.loads(e))
+    return start_response(color)
 
 
 @bottle.post('/move')
