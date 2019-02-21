@@ -46,7 +46,7 @@ def start():
     tailType = "round-bum"
     
 
-    return start_response(color)
+    return start_response(color,tailType)
 
 
 @bottle.post('/move')
