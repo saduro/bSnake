@@ -44,6 +44,7 @@ def start():
     color = "#00FF00"
     headType = "evil"
     tailType = "hook"
+    
 
     return start_response(color)
 
