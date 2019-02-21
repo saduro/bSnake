@@ -42,7 +42,7 @@ def start():
     print(json.dumps(data))
 
     color = "#FF0000"
-    headType = "evil"
+    headType = "beluga"
     tailType = "hook"
     
 
