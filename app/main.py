@@ -43,7 +43,7 @@ def start():
 
     color = "#FF0000"
     headType = "beluga"
-    tailType = "hook"
+    tailType = "round-bum"
     
 
     return start_response(color)
