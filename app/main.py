@@ -59,7 +59,7 @@ def move():
     """
     print(json.dumps(data))
 
-    x = data.you.body.x
+    x = data."you"."body"."x"
     noleft = ['up', 'down', 'right']
     
     
