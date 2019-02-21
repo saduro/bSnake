@@ -46,7 +46,7 @@ def start():
     tailType = "round-bum"
     
 
-    return start_response(color,tailType)
+    return start_response(color)
 
 
 @bottle.post('/move')
@@ -59,9 +59,15 @@ def move():
     """
     print(json.dumps(data))
 
-    directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
-
+    x = data.you.body.x
+    noleft = ['up', 'down', 'right']
+    
+    
+    if x == 0:
+        direction = random.choice(directions)
+    else:
+        direction = 'left'
+    
     return move_response(direction)
 
 
