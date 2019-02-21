@@ -48,7 +48,7 @@ def start():
     e.update({"tailType" : "round-bum"}
     
 
-    return start_response(json.loads(e))
+    return start_response(json.load(e))
 
 
 @bottle.post('/move')
@@ -59,11 +59,8 @@ def move():
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
     """
-    d = {}
-    d = json.loads(data)
-    d["game"]["id"]
     noLeft = ['up', 'down', 'right']
-    
+    x = 0
     
     if x == 0:
         direction = random.choice(noLeft)
