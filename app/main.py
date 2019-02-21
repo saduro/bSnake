@@ -59,12 +59,12 @@ def move():
     """
     print(json.dumps(data))
 
-    x = data."you"."body"."x"
-    noleft = ['up', 'down', 'right']
+    x = 0 
+    noLeft = ['up', 'down', 'right']
     
     
     if x == 0:
-        direction = random.choice(directions)
+        direction = random.choice(noLeft)
     else:
         direction = 'left'
     
