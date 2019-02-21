@@ -48,7 +48,7 @@ def start():
     e.update({"tailType" : "round-bum"}
     
 
-    return start_response(json.load(e))
+    return start_response(json.loads(e))
 
 
 @bottle.post('/move')
