@@ -41,7 +41,7 @@ def start():
    
             
     """
-    e = """{"color": "#FF0000","headType": "evil","tailType": "hook"}"""
+    e = """{"color": "#ff0000","headType": "evil","tailType": "hook"}"""
     color = "#FF0000"
     return start_response(e)
 
@@ -54,13 +54,18 @@ def move():
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
     """
-    noLeft = ['up', 'down', 'right']
-    x = 0
+    moveOption = []
     
-    if x == 0:
-        direction = random.choice(noLeft)
-    else:
-        direction = 'left'
+    if data["you"]["body"][0]["x"] != 0:
+        moveOption += ["left"]
+    if data["you"]["body"][0]["x"] != (data[board][width]-1):
+        moveOption += ['rigth']
+    if data["you"]["body"][0]["y"] != 0:
+        moveOption += ['up']
+    if data["you"]["body"][0]["y"] != (data[board][height]-1):
+        moveOption += ['down']
+    
+    direction = random.choice(moveOption)
     
     return move_response(direction)
 
