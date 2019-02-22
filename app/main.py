@@ -55,27 +55,43 @@ def move():
     """
     print(json.dumps(data))
     turn = data['turn']
+    body =data['you']['body']
     moveOption = []
+    x = body[0]['x']
+    y = body[0]['y']
+    xLimit = data['board']['width'] - 1
+    yLimit = data['board']['height'] - 1
+    left = 1
+    right = 1
+    up = 1
+    down = 1
     
-    if turn == 1:
-        if data['you']['body'][0]['x'] != 0:
-            moveOption += ['left']
-        if data['you']['body'][0]['y'] != 0:
-            moveOption += ['up']
-        if data['you']['body'][0]['x'] != data['board']['width'] - 1:
-            moveOption += ['right']
-        if data['you']['body'][0]['y'] != data['board']['height'] - 1:
-            moveOption += ['down']
+    for b in body:
+        if x == b['x']:
+            if y == b['y'] -1:
+                up = 0
+            elif y == b['y'] + 1:
+                down = 0
+        elif y == b['y']:
+            if x == b['x'] -1:
+                left = 0
+            elif x == b['x'] + 1:
+                right = 0
+    
+    if x and not left:
+        moveOption += ['left']
+    if x != xLimit and right:
+        moveOption += ['right']
+    if y and up :
+        moveOption += ['up']
+    if y != yLimit and down:
+        moveOption += ['down']
+    
+    if len(moveOption):
+        direction = random.choice(moveOption)
     else:
-        if data['you']['body'][0]['x'] != 0 and data['you']['body'][1]['x'] != data['you']['body'][0]['x'] -1:
-            moveOption += ['left']
-        if data['you']['body'][0]['y'] != 0 and data['you']['body'][1]['y'] != data['you']['body'][0]['y'] -1:
-            moveOption += ['up']
-        if data['you']['body'][0]['x'] != data['board']['width'] - 1 and data['you']['body'][1]['x'] != data['you']['body'][0]['x'] +1:
-            moveOption += ['right']
-        if data['you']['body'][0]['y'] != data['board']['height'] - 1 and data['you']['body'][1]['y'] != data['you']['body'][0]['y'] +1:
-            moveOption += ['down']
-    direction = random.choice(moveOption)
+        direction = 'up'
+    
 
     return move_response(direction)
 
