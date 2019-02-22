@@ -82,15 +82,15 @@ def move():
     for snake in snakes:
         b in snake['body']:
             if x == b['x']:
-            if b['y'] == y-1:
-                up = 0
-            elif b['y'] == y+1:
-                down = 0
-        elif y == b['y']:
-            if  b['x'] == x-1:
-                left = 0
-            elif  b['x'] == x+1:
-                right = 0
+                if b['y'] == y-1:
+                    up = 0
+                elif b['y'] == y+1:
+                    down = 0
+            elif y == b['y']:
+                if  b['x'] == x-1:
+                    left = 0
+                elif  b['x'] == x+1:
+                    right = 0
     
     if x and left:
         moveOption += ['left']
