@@ -94,18 +94,18 @@ def move():
                     right = 0
             if head['x']+1 == x:
                 if head['y']+1 == y:
-                    down = 0
-                    right = 0
-                if head['y']-1 == y:
                     up = 0
-                    right = 0
+                    left = 0
+                if head['y']-1 == y:
+                    down = 0
+                    left = 0
             if head['x']-1 == x:
                 if head['y']+1 == y:
-                    down = 0
-                    left = 0
-                if head['y']-1 == y:
                     up = 0
-                    left = 0
+                    right = 0
+                if head['y']-1 == y:
+                    down = 0
+                    right = 0
                 
         for b in snake['body']:
             if x == b['x']:
