@@ -80,6 +80,33 @@ def move():
                 right = 0
     
     for snake in snakes:
+        if len(snake) >= len(body):
+            head = snake[0]
+            if head['x'] == x:
+                if head['y']+2 == y:
+                    up = 0
+                elif head['y']-2 == y:
+                    down = 0
+            if head['y'] == y:
+                if head['x']+2 == x:
+                    left = 0
+                if head['x']-2 == x:
+                    right = 0
+            if head['x']+1 == x:
+                if head['y']+1 == y:
+                    up = 0
+                    left = 0
+                if head['y']-1 == y:
+                    up = 0
+                    right = 0
+            if head['x']-1 == x:
+                if head['y']+1 == y:
+                    down = 0
+                    left = 0
+                if head['y']-1 == y:
+                    down = 0
+                    right = 0
+                
         for b in snake['body']:
             if x == b['x']:
                 if b['y'] == y-1:
