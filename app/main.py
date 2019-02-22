@@ -78,7 +78,7 @@ def move():
             elif x == b['x'] + 1:
                 right = 0
     
-    if x and not left:
+    if x and left:
         moveOption += ['left']
     if x != xLimit and right:
         moveOption += ['right']
@@ -87,7 +87,7 @@ def move():
     if y != yLimit and down:
         moveOption += ['down']
     
-    if len(moveOption):
+    if len(moveOption) != 0:
         direction = random.choice(moveOption)
     else:
         direction = 'up'
