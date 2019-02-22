@@ -54,17 +54,27 @@ def move():
             snake AI must choose a direction to move in.
     """
     print(json.dumps(data))
+    turn = data['turn']
     moveOption = []
     
-    if data['you']['body'][0]['x'] != 0:
-        moveOption += ['left']
-    if data['you']['body'][0]['y'] != 0:
-        moveOption += ['right']
-    if data['you']['body'][0]['x'] != data['board']['width'] - 1:
-        moveOption += ['right']
-    if data['you']['body'][0]['y'] != data['board']['height'] - 1:
-        moveOption += ['down']
-        
+    if turn == 1:
+        if data['you']['body'][0]['x'] != 0:
+            moveOption += ['left']
+        if data['you']['body'][0]['y'] != 0:
+            moveOption += ['up']
+        if data['you']['body'][0]['x'] != data['board']['width'] - 1:
+            moveOption += ['right']
+        if data['you']['body'][0]['y'] != data['board']['height'] - 1:
+            moveOption += ['down']
+    else:
+        if data['you']['body'][0]['x'] != 0 && data['you']['body'][1]['x'] != data['you']['body'][0]['x'] -1:
+            moveOption += ['left']
+        if data['you']['body'][0]['y'] != 0 && data['you']['body'][1]['y'] != data['you']['body'][0]['y'] -1:
+            moveOption += ['up']
+        if data['you']['body'][0]['x'] != data['board']['width'] - 1 && data['you']['body'][1]['x'] != data['you']['body'][0]['x'] +1:
+            moveOption += ['right']
+        if data['you']['body'][0]['y'] != data['board']['height'] - 1 && data['you']['body'][1]['y'] != data['you']['body'][0]['y'] +1:
+            moveOption += ['down']
     direction = random.choice(moveOption)
 
     return move_response(direction)
