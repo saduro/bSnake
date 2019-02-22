@@ -82,15 +82,13 @@ def move():
         moveOption += ['left']
     if x != xLimit and right == 1:
         moveOption += ['right']
-    if y !=0 and up ==1:
+    if y !=0 and up == 1:
         moveOption += ['up']
     if y != yLimit and down == 1 :
         moveOption += ['down']
     
-    if len(moveOption) != 0:
-        direction = random.choice(moveOption)
-    else:
-        direction = 'up'
+
+    direction = random.choice(moveOption)
     
 
     return move_response(direction)
