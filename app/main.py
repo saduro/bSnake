@@ -78,13 +78,13 @@ def move():
             elif x == b['x'] + 1:
                 right = 0
     
-    if x and left:
+    if x != 0 and left == 1:
         moveOption += ['left']
-    if x != xLimit and right:
+    if x != xLimit and right == 1:
         moveOption += ['right']
-    if y and up :
+    if y !=0 and up ==1:
         moveOption += ['up']
-    if y != yLimit and down:
+    if y != yLimit and down == 1 :
         moveOption += ['down']
     
     if len(moveOption) != 0:
