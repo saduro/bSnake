@@ -17,7 +17,6 @@ def static(path):
     """
     Given a path, return the static file located relative
     to the static folder.
-
     This can be used to return the snake head URL in an API response.
     """
     return bottle.static_file(path, root='static/')
@@ -37,7 +36,7 @@ def start():
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
-            request's data if necessary.        
+            request's data if necessary.
     """
     print(json.dumps(data))
 
@@ -53,12 +52,12 @@ def move():
     """
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
-   
     """
     print(json.dumps(data))
+
     directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions
-    
+    direction = random.choice(directions)
+
     return move_response(direction)
 
 
