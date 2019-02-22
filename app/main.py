@@ -55,7 +55,8 @@ def move():
     """
     print(json.dumps(data))
     turn = data['turn']
-    body =data['you']['body']
+    body = data['you']['body']
+    snakes = data['board']['snakes']
     moveOption = []
     x = body[0]['x']
     y = body[0]['y']
@@ -68,14 +69,27 @@ def move():
     
     for b in body:
         if x == b['x']:
-            if y == b['y'] +1:
+            if b['y'] == y-1:
                 up = 0
-            elif y == b['y'] -1:
+            elif b['y'] == y+1:
                 down = 0
         elif y == b['y']:
-            if x == b['x'] +1:
+            if  b['x'] == x-1:
                 left = 0
-            elif x == b['x'] - 1:
+            elif  b['x'] == x+1:
+                right = 0
+    
+    for snake in snakes:
+        b in snake['body']:
+            if x == b['x']:
+            if b['y'] == y-1:
+                up = 0
+            elif b['y'] == y+1:
+                down = 0
+        elif y == b['y']:
+            if  b['x'] == x-1:
+                left = 0
+            elif  b['x'] == x+1:
                 right = 0
     
     if x and left:
