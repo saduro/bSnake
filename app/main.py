@@ -80,8 +80,8 @@ def move():
                 right = 0
     
     for snake in snakes:
-        if len(snake) >= len(body):
-            head = snake[0]
+        if len(snake['body']) >= len(body):
+            head = snake['body'][0]
             if head['x'] == x:
                 if head['y']+2 == y:
                     up = 0
