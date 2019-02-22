@@ -72,11 +72,17 @@ def move():
                 up = 0
             elif y == b['y'] + 1:
                 down = 0
+            else:
+                left = 1
+                right = 1
         elif y == b['y']:
             if x == b['x'] -1:
                 left = 0
             elif x == b['x'] + 1:
                 right = 0
+            else:
+                up = 1
+                down = 1
     
     if x != 0 and left != 0:
         moveOption += ['left']
