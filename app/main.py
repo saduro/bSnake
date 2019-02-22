@@ -39,11 +39,11 @@ def start():
             initialize your snake state here using the
             request's data if necessary.
    
-            
+     e = """{"color": "#ff0000","headType": "evil","tailType": "hook"}"""        
     """
-    e = """{"color": "#ff0000","headType": "evil","tailType": "hook"}"""
+   
     color = "#FF0000"
-    return start_response(e)
+    return start_response(color)
 
 
 @bottle.post('/move')
