@@ -66,31 +66,25 @@ def move():
     up = 1
     down = 1
     
-    for b in body:
+    """for b in body:
         if x == b['x']:
             if y == b['y'] -1:
                 up = 0
             elif y == b['y'] + 1:
                 down = 0
-            else:
-                left = 1
-                right = 1
         elif y == b['y']:
             if x == b['x'] -1:
                 left = 0
             elif x == b['x'] + 1:
                 right = 0
-            else:
-                up = 1
-                down = 1
-    
-    if x != 0 and left != 0:
+    """
+    if x and left:
         moveOption += ['left']
-    if x != xLimit and right != 0:
+    if x != xLimit and right:
         moveOption += ['right']
-    if y !=0 and up != 0:
+    if y and up:
         moveOption += ['up']
-    if y != yLimit and down != 0 :
+    if y != yLimit and down:
         moveOption += ['down']
     
 
