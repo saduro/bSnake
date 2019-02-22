@@ -41,10 +41,11 @@ def start():
     color = "#FF0000"
             
     """
-    e = {}
-    e.update({"color" : "#FF0000"})
-    e.update({"headType" : "beluga"})
-    e.update({"tailType" : "round-bum"})
+    e = """{
+    "color": "#ff00ff",
+    "headType": "bendr",
+    "tailType": "pixel"
+    }"""
    
     return start_response(json.loads(e))
 
