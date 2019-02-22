@@ -41,11 +41,7 @@ def start():
     color = "#FF0000"
             
     """
-    e = """{
-    "color": "#ff00ff",
-    "headType": "bendr",
-    "tailType": "pixel"
-    }"""
+    e = {"color": "#ff00ff","headType": "bendr","tailType": "pixel"}
    
     return start_response(json.loads(e))
 
