@@ -80,7 +80,7 @@ def move():
                 right = 0
     
     for snake in snakes:
-        b in snake['body']:
+        for b in snake['body']:
             if x == b['x']:
                 if b['y'] == y-1:
                     up = 0
