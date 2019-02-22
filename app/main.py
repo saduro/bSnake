@@ -37,9 +37,7 @@ def start():
     """
     TODO: If you intend to have a stateful snake AI,
             initialize your snake state here using the
-            request's data if necessary.
-   
-     e = """{"color": "#ff0000","headType": "evil","tailType": "hook"}"""        
+            request's data if necessary.        
     """
     print(json.dumps(data))
 
@@ -56,16 +54,6 @@ def move():
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
    
-    moveOption = []
-    
-    if data["you"]["body"][0]["x"] != 0:
-        moveOption += ["left"]
-    if data["you"]["body"][0]["x"] != (data[board][width]-1):
-        moveOption += ['rigth']
-    if data["you"]["body"][0]["y"] != 0:
-        moveOption += ['up']
-    if data["you"]["body"][0]["y"] != (data[board][height]-1):
-        moveOption += ['down']
     """
     print(json.dumps(data))
     directions = ['up', 'down', 'left', 'right']
