@@ -53,7 +53,7 @@ def move():
     """
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
-    """
+   
     moveOption = []
     
     if data["you"]["body"][0]["x"] != 0:
@@ -64,6 +64,8 @@ def move():
         moveOption += ['up']
     if data["you"]["body"][0]["y"] != (data[board][height]-1):
         moveOption += ['down']
+    """
+    moveOption["up"]
     
     direction = random.choice(moveOption)
     
