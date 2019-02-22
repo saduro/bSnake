@@ -41,7 +41,7 @@ def start():
    
             
     """
-    e = """{"color": "#ff00ff","headType": "bendr","tailType": "pixel"}"""
+    e = """{"color": "#FF0000","headType": "evil","tailType": "hook"}"""
     color = "#FF0000"
     return start_response(e)
 
