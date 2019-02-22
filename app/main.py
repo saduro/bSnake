@@ -67,13 +67,13 @@ def move():
         if data['you']['body'][0]['y'] != data['board']['height'] - 1:
             moveOption += ['down']
     else:
-        if data['you']['body'][0]['x'] != 0 && data['you']['body'][1]['x'] != data['you']['body'][0]['x'] -1:
+        if data['you']['body'][0]['x'] != 0 and data['you']['body'][1]['x'] != data['you']['body'][0]['x'] -1:
             moveOption += ['left']
-        if data['you']['body'][0]['y'] != 0 && data['you']['body'][1]['y'] != data['you']['body'][0]['y'] -1:
+        if data['you']['body'][0]['y'] != 0 and data['you']['body'][1]['y'] != data['you']['body'][0]['y'] -1:
             moveOption += ['up']
-        if data['you']['body'][0]['x'] != data['board']['width'] - 1 && data['you']['body'][1]['x'] != data['you']['body'][0]['x'] +1:
+        if data['you']['body'][0]['x'] != data['board']['width'] - 1 and data['you']['body'][1]['x'] != data['you']['body'][0]['x'] +1:
             moveOption += ['right']
-        if data['you']['body'][0]['y'] != data['board']['height'] - 1 && data['you']['body'][1]['y'] != data['you']['body'][0]['y'] +1:
+        if data['you']['body'][0]['y'] != data['board']['height'] - 1 and data['you']['body'][1]['y'] != data['you']['body'][0]['y'] +1:
             moveOption += ['down']
     direction = random.choice(moveOption)
 
