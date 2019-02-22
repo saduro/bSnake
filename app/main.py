@@ -40,7 +40,7 @@ def start():
     """
     print(json.dumps(data))
 
-    color = "#00FF00"
+    color = "#FF0000"
 
     return start_response(color)
 
@@ -54,9 +54,11 @@ def move():
             snake AI must choose a direction to move in.
     """
     print(json.dumps(data))
-
     directions = ['up', 'down', 'left', 'right']
-    direction = random.choice(directions)
+    if data['you']['body'][0]['x'] == 0:
+        direction = 'up'
+    else:
+        direction = 'left'
 
     return move_response(direction)
 
