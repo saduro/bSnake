@@ -41,6 +41,8 @@ def start():
    
      e = """{"color": "#ff0000","headType": "evil","tailType": "hook"}"""        
     """
+    print(json.dumps(data))
+    
    
     color = "#FF0000"
     return start_response(color)
@@ -65,6 +67,7 @@ def move():
     if data["you"]["body"][0]["y"] != (data[board][height]-1):
         moveOption += ['down']
     """
+    print(json.dumps(data))
     moveOption["up"]
     
     direction = random.choice(moveOption)
