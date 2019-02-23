@@ -67,7 +67,7 @@ def move():
     up = 1
     down = 1
     
-    i=0
+    i=1
     for b in body:
         if i != len(body):
             if x == b['x']:
@@ -109,7 +109,7 @@ def move():
                 if head['y']-1 == y:
                     down = 0
                     right = 0
-        i=0        
+        i=1
         for b in snake['body']:
             if i != len(snake['body']):
                 if x == b['x']:
