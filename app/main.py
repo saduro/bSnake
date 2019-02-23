@@ -67,17 +67,20 @@ def move():
     up = 1
     down = 1
     
+    i=0
     for b in body:
-        if x == b['x']:
-            if b['y'] == y-1:
-                up = 0
-            elif b['y'] == y+1:
-                down = 0
-        elif y == b['y']:
-            if  b['x'] == x-1:
-                left = 0
-            elif  b['x'] == x+1:
-                right = 0
+        i+=1
+        if i = len(body):
+            if x == b['x']:
+                if b['y'] == y-1:
+                    up = 0
+                elif b['y'] == y+1:
+                    down = 0
+            elif y == b['y']:
+                if  b['x'] == x-1:
+                    left = 0
+                elif  b['x'] == x+1:
+                    right = 0
     
     for snake in snakes:
         if len(snake['body']) >= len(body):
@@ -106,18 +109,20 @@ def move():
                 if head['y']-1 == y:
                     down = 0
                     right = 0
-                
+        i=0        
         for b in snake['body']:
-            if x == b['x']:
-                if b['y'] == y-1:
-                    up = 0
-                elif b['y'] == y+1:
-                    down = 0
-            elif y == b['y']:
-                if  b['x'] == x-1:
-                    left = 0
-                elif  b['x'] == x+1:
-                    right = 0
+            i+=1
+            if i == len(snake['body']):
+                if x == b['x']:
+                    if b['y'] == y-1:
+                        up = 0
+                    elif b['y'] == y+1:
+                        down = 0
+                elif y == b['y']:
+                    if  b['x'] == x-1:
+                        left = 0
+                    elif  b['x'] == x+1:
+                        right = 0
     
     if x and left:
         moveOption += ['left']
