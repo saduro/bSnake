@@ -91,39 +91,39 @@ def move():
             if head['x'] == x:
                 if head['y']+2 == y:
                     up = 0
-                    riskyMove += 'up'
+                    riskyMove += ['up']
                 elif head['y']-2 == y:
                     down = 0
-                    riskyMove += 'down'
+                    riskyMove += ['down']
             if head['y'] == y:
                 if head['x']+2 == x:
                     left = 0
-                    riskyMove += 'left'
+                    riskyMove += ['left']
                 if head['x']-2 == x:
                     right = 0
-                    riskyMove += 'right'
+                    riskyMove += ['right']
             if head['x']+1 == x:
                 if head['y']+1 == y:
                     up = 0
-                    riskyMove += 'up'
+                    riskyMove += ['up']
                     left = 0
-                    riskyMove += 'left'
+                    riskyMove += ['left']
                 if head['y']-1 == y:
                     down = 0
-                    riskyMove += 'down'
+                    riskyMove += ['down']
                     left = 0
-                    riskyMove += 'left'
+                    riskyMove += ['left']
             if head['x']-1 == x:
                 if head['y']+1 == y:
                     up = 0
-                    riskyMove += 'up'
+                    riskyMove += ['up']
                     right = 0
-                    riskyMove += 'right'
+                    riskyMove += ['right']
                 if head['y']-1 == y:
                     down = 0
-                    riskyMove += 'down'
+                    riskyMove += ['down']
                     right = 0
-                    riskyMove += 'right'
+                    riskyMove += ['right']
         i=1
         for b in snake['body']:
             if i != len(snake['body']):
