@@ -70,21 +70,6 @@ def move():
     up = 1
     down = 1
     
-    i=1
-    for b in body:
-        if i != len(body):
-            if x == b['x']:
-                if b['y'] == y-1:
-                    up = 0
-                elif b['y'] == y+1:
-                    down = 0
-            elif y == b['y']:
-                if  b['x'] == x-1:
-                    left = 0
-                elif  b['x'] == x+1:
-                    right = 0
-        i+=1
-    
     for snake in snakes:
         if len(snake['body']) >= len(body):
             head = snake['body'][0]
@@ -130,14 +115,36 @@ def move():
                 if x == b['x']:
                     if b['y'] == y-1:
                         up = 0
+                        riskyMove.remove('up')
                     elif b['y'] == y+1:
                         down = 0
+                        riskyMove.remove('down')
                 elif y == b['y']:
                     if  b['x'] == x-1:
                         left = 0
+                        riskyMove.remove('left')
                     elif  b['x'] == x+1:
                         right = 0
+                        riskyMove.remove('left')
             i+=1
+    
+    i=1
+    for b in body:
+        if x == b['x']:
+            if b['y'] == y-1:
+                up = 0
+                riskyMove.remove('up')
+            elif b['y'] == y+1:
+                down = 0
+                riskyMove.remove('down')
+        elif y == b['y']:
+            if  b['x'] == x-1:
+                left = 0
+                riskyMove.remove('left')
+            elif  b['x'] == x+1:
+                right = 0
+                riskyMove.remove('left')
+        i+=1
     
     minDistance = 1000000000
     if len(foods) != 0:
