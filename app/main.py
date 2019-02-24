@@ -153,16 +153,24 @@ def move():
             if yFoodDistance < 0:
                 if 'up' in moveOption:
                     direction = 'up'
+                else:
+                    direction = random.choice(moveOption)
             else:
                 if 'down' in moveOption:
                     direction = 'down'
+                else:
+                    direction = random.choice(moveOption)
         elif yFoodDistance == 0:
             if xFoodDistance < 0:
                 if 'left' in moveOption:
                     direction = 'left'
+                else:
+                    direction = random.choice(moveOption)
             else:
                 if 'right' in moveOption:
                     direction = 'right'
+                else:
+                    direction = random.choice(moveOption)
         elif abs(xFoodDistance) < abs(yFoodDistance):
             if xFoodDistance < 0:
                 if 'left' in moveOption:
@@ -171,9 +179,13 @@ def move():
                     if yFoodDistance < 0:
                         if 'up' in moveOption:
                             direction = 'up'
+                        else:
+                            direction = random.choice(moveOption)
                     else:
                         if 'down' in moveOption:
                             direction = 'down'
+                        else:
+                            direction = random.choice(moveOption)
             else:
                 if 'right' in moveOption:
                     direction = 'right'
@@ -181,9 +193,13 @@ def move():
                     if yFoodDistance < 0:
                         if 'up' in moveOption:
                             direction = 'up'
+                        else:
+                            direction = random.choice(moveOption)
                     else:
                         if 'down' in moveOption:
                             direction = 'down'
+                        else:
+                            direction = random.choice(moveOption)
         elif abs(yFoodDistance) < abs(xFoodDistance):
             if yFoodDistance < 0:
                 if 'up' in moveOption:
@@ -192,9 +208,13 @@ def move():
                     if xFoodDistance < 0:
                         if 'left' in moveOption:
                             direction = 'left'
+                        else:
+                            direction = random.choice(moveOption)
                     else:
                         if 'right' in moveOption:
                             direction = 'right'
+                        else:
+                            direction = random.choice(moveOption)
             else:
                 if 'down' in moveOption:
                     direction = 'down'
@@ -202,9 +222,13 @@ def move():
                     if yFoodDistance < 0:
                         if 'left' in moveOption:
                             direction = 'left'
+                        else:
+                            direction = random.choice(moveOption)
                     else:
                         if 'right' in moveOption:
                             direction = 'right'
+                        else:
+                            direction = random.choice(moveOption)
         else:
             direction = random.choice(moveOption)
     else:
