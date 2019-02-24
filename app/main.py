@@ -134,24 +134,25 @@ def move():
     
     i=1
     for b in body:
-        if x == b['x']:
-            if b['y'] == y-1:
-                up = 0
-                if 'up' in riskyMove:
-                    riskyMove.remove('up')
-            elif b['y'] == y+1:
-                down = 0
-                if 'down' in riskyMove:
-                    riskyMove.remove('down')
-        elif y == b['y']:
-            if  b['x'] == x-1:
-                left = 0
-                if 'left' in riskyMove:
-                    riskyMove.remove('left')
-            elif  b['x'] == x+1:
-                right = 0
-                if 'right' in riskyMove:
-                    riskyMove.remove('right')
+        if i != len(body):
+            if x == b['x']:
+                if b['y'] == y-1:
+                    up = 0
+                    if 'up' in riskyMove:
+                        riskyMove.remove('up')
+                elif b['y'] == y+1:
+                    down = 0
+                    if 'down' in riskyMove:
+                        riskyMove.remove('down')
+            elif y == b['y']:
+                if  b['x'] == x-1:
+                    left = 0
+                    if 'left' in riskyMove:
+                        riskyMove.remove('left')
+                elif  b['x'] == x+1:
+                    right = 0
+                    if 'right' in riskyMove:
+                        riskyMove.remove('right')
         i+=1
     
     minDistance = 1000000000
