@@ -57,11 +57,13 @@ def move():
     turn = data['turn']
     body = data['you']['body']
     snakes = data['board']['snakes']
+    foods = data['board']['food']
     moveOption = []
     x = body[0]['x']
     y = body[0]['y']
     xLimit = data['board']['width'] - 1
     yLimit = data['board']['height'] - 1
+    food = 1
     left = 1
     right = 1
     up = 1
@@ -124,6 +126,19 @@ def move():
                         right = 0
             i+=1
     
+    minDistance = 1000000000
+    if len(foods) != 0:
+        for f in foods:
+            xDistance = f['x']-x
+            yDistance = f['y']-y
+            distance = abs(xDistance)+abs(yDistance)
+            if distance <= minDistance:
+                minDistance = distance
+                xFoodDistance = xDistance
+                yFoodDistance = yDistance
+    else:
+        food = 0
+    
     if x and left:
         moveOption += ['left']
     if x != xLimit and right:
@@ -133,8 +148,67 @@ def move():
     if y != yLimit and down:
         moveOption += ['down']
     
-
-    direction = random.choice(moveOption)
+    if food:
+        if xFoodDistance == 0:
+            if yFoodDistance < 0:
+                if 'up' in moveOption:
+                    direction = 'up'
+            else:
+                if 'down' in moveOption:
+                    direction = 'down'
+        elif yFoodDistance == 0:
+            if xFoodDistance < 0:
+                if 'left' in moveOption:
+                    direction = 'left'
+            else:
+                if 'right' in moveOption:
+                    direction = 'right'
+        elif abs(xFoodDistance) < abs(yFoodDistance):
+            if xFoodDistance < 0:
+                if 'left' in moveOption:
+                    direction = 'left'
+                else:
+                    if yFoodDistance < 0:
+                        if 'up' in moveOption:
+                            direction = 'up'
+                    else:
+                        if 'down' in moveOption:
+                            direction = 'down'
+            else:
+                if 'right' in moveOption:
+                    direction = 'right'
+                else:
+                    if yFoodDistance < 0:
+                        if 'up' in moveOption:
+                            direction = 'up'
+                    else:
+                        if 'down' in moveOption:
+                            direction = 'down'
+        elif abs(yFoodDistance) < abs(xFoodDistance):
+            if yFoodDistance < 0:
+                if 'up' in moveOption:
+                    direction = 'up'
+                else:
+                    if xFoodDistance < 0:
+                        if 'left' in moveOption:
+                            direction = 'left'
+                    else:
+                        if 'right' in moveOption:
+                            direction = 'right'
+            else:
+                if 'down' in moveOption:
+                    direction = 'down'
+                else:
+                    if yFoodDistance < 0:
+                        if 'left' in moveOption:
+                            direction = 'left'
+                    else:
+                        if 'right' in moveOption:
+                            direction = 'right'
+        else:
+            direction = random.choice(moveOption)
+    else:
+        direction = random.choice(moveOption)
     
 
     return move_response(direction)
