@@ -219,7 +219,7 @@ def move():
                 if 'down' in moveOption:
                     direction = 'down'
                 else:
-                    if yFoodDistance < 0:
+                    if xFoodDistance < 0:
                         if 'left' in moveOption:
                             direction = 'left'
                         else:
