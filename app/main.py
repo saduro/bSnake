@@ -59,6 +59,7 @@ def move():
     snakes = data['board']['snakes']
     foods = data['board']['food']
     moveOption = []
+    riskyMove = []
     x = body[0]['x']
     y = body[0]['y']
     xLimit = data['board']['width'] - 1
@@ -90,27 +91,39 @@ def move():
             if head['x'] == x:
                 if head['y']+2 == y:
                     up = 0
+                    riskyMove += 'up'
                 elif head['y']-2 == y:
                     down = 0
+                    riskyMove += 'down'
             if head['y'] == y:
                 if head['x']+2 == x:
                     left = 0
+                    riskyMove += 'left'
                 if head['x']-2 == x:
                     right = 0
+                    riskyMove += 'right'
             if head['x']+1 == x:
                 if head['y']+1 == y:
                     up = 0
+                    riskyMove += 'up'
                     left = 0
+                    riskyMove += 'left'
                 if head['y']-1 == y:
                     down = 0
+                    riskyMove += 'down'
                     left = 0
+                    riskyMove += 'left'
             if head['x']-1 == x:
                 if head['y']+1 == y:
                     up = 0
+                    riskyMove += 'up'
                     right = 0
+                    riskyMove += 'right'
                 if head['y']-1 == y:
                     down = 0
+                    riskyMove += 'down'
                     right = 0
+                    riskyMove += 'right'
         i=1
         for b in snake['body']:
             if i != len(snake['body']):
@@ -154,23 +167,35 @@ def move():
                 if 'up' in moveOption:
                     direction = 'up'
                 else:
-                    direction = random.choice(moveOption)
+                    if len(moveOption):
+                        direction = random.choice(moveOption)
+                    else:
+                       direction = random.choice(riskyMove) 
             else:
                 if 'down' in moveOption:
                     direction = 'down'
                 else:
-                    direction = random.choice(moveOption)
+                    if len(moveOption):
+                        direction = random.choice(moveOption)
+                    else:
+                       direction = random.choice(riskyMove) 
         elif yFoodDistance == 0:
             if xFoodDistance < 0:
                 if 'left' in moveOption:
                     direction = 'left'
                 else:
-                    direction = random.choice(moveOption)
+                    if len(moveOption):
+                        direction = random.choice(moveOption)
+                    else:
+                       direction = random.choice(riskyMove) 
             else:
                 if 'right' in moveOption:
                     direction = 'right'
                 else:
-                    direction = random.choice(moveOption)
+                    if len(moveOption):
+                        direction = random.choice(moveOption)
+                    else:
+                        direction = random.choice(riskyMove) 
         elif abs(xFoodDistance) < abs(yFoodDistance):
             if xFoodDistance < 0:
                 if 'left' in moveOption:
@@ -180,12 +205,18 @@ def move():
                         if 'up' in moveOption:
                             direction = 'up'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove) 
                     else:
                         if 'down' in moveOption:
                             direction = 'down'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove) 
             else:
                 if 'right' in moveOption:
                     direction = 'right'
@@ -194,12 +225,18 @@ def move():
                         if 'up' in moveOption:
                             direction = 'up'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove) 
                     else:
                         if 'down' in moveOption:
                             direction = 'down'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove) 
         elif abs(yFoodDistance) < abs(xFoodDistance):
             if yFoodDistance < 0:
                 if 'up' in moveOption:
@@ -209,12 +246,18 @@ def move():
                         if 'left' in moveOption:
                             direction = 'left'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove) 
                     else:
                         if 'right' in moveOption:
                             direction = 'right'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove)
             else:
                 if 'down' in moveOption:
                     direction = 'down'
@@ -223,16 +266,28 @@ def move():
                         if 'left' in moveOption:
                             direction = 'left'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove)
                     else:
                         if 'right' in moveOption:
                             direction = 'right'
                         else:
-                            direction = random.choice(moveOption)
+                            if len(moveOption):
+                                direction = random.choice(moveOption)
+                            else:
+                                direction = random.choice(riskyMove)
         else:
-            direction = random.choice(moveOption)
+            if len(moveOption):
+                direction = random.choice(moveOption)
+            else:
+                direction = random.choice(riskyMove)
     else:
-        direction = random.choice(moveOption)
+        if len(moveOption):
+            direction = random.choice(moveOption)
+        else:
+            direction = random.choice(riskyMove)
     
 
     return move_response(direction)
