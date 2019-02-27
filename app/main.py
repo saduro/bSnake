@@ -64,6 +64,7 @@ def move():
     y = body[0]['y']
     xLimit = data['board']['width'] - 1
     yLimit = data['board']['height'] - 1
+    LonguestSnake = 1
     food = 1
     left = 1
     right = 1
@@ -72,6 +73,7 @@ def move():
     
     for snake in snakes:
         if len(snake['body']) >= len(body):
+            LonguestSnake = 0
             head = snake['body'][0]
             if head['x'] == x:
                 if head['y']+2 == y:
@@ -177,7 +179,7 @@ def move():
     if y != yLimit and down:
         moveOption += ['down']
     
-    if food:
+    if food and not LonguestSnake:
         if xFoodDistance == 0:
             if yFoodDistance < 0:
                 if 'up' in moveOption:
