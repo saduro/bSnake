@@ -54,6 +54,7 @@ def move():
             snake AI must choose a direction to move in.
     """
     print(json.dumps(data))
+    myId = data['you']['id']
     turn = data['turn']
     body = data['you']['body']
     snakes = data['board']['snakes']
@@ -72,67 +73,68 @@ def move():
     down = 1
     
     for snake in snakes:
-        if len(snake['body']) >= len(body):
-            LonguestSnake = 0
-            head = snake['body'][0]
-            if head['x'] == x:
-                if head['y']+2 == y:
-                    up = 0
-                    riskyMove += ['up']
-                elif head['y']-2 == y:
-                    down = 0
-                    riskyMove += ['down']
-            if head['y'] == y:
-                if head['x']+2 == x:
-                    left = 0
-                    riskyMove += ['left']
-                if head['x']-2 == x:
-                    right = 0
-                    riskyMove += ['right']
-            if head['x']+1 == x:
-                if head['y']+1 == y:
-                    up = 0
-                    riskyMove += ['up']
-                    left = 0
-                    riskyMove += ['left']
-                if head['y']-1 == y:
-                    down = 0
-                    riskyMove += ['down']
-                    left = 0
-                    riskyMove += ['left']
-            if head['x']-1 == x:
-                if head['y']+1 == y:
-                    up = 0
-                    riskyMove += ['up']
-                    right = 0
-                    riskyMove += ['right']
-                if head['y']-1 == y:
-                    down = 0
-                    riskyMove += ['down']
-                    right = 0
-                    riskyMove += ['right']
-        i=1
-        for b in snake['body']:
-            if i != len(snake['body']):
-                if x == b['x']:
-                    if b['y'] == y-1:
+        if snakes['id'] != myId:
+            if len(snake['body']) >= len(body):
+                LonguestSnake = 0
+                head = snake['body'][0]
+                if head['x'] == x:
+                    if head['y']+2 == y:
                         up = 0
-                        if 'up' in riskyMove:
-                            riskyMove.remove('up')
-                    elif b['y'] == y+1:
+                        riskyMove += ['up']
+                    elif head['y']-2 == y:
                         down = 0
-                        if 'down' in riskyMove:
-                            riskyMove.remove('down')
-                elif y == b['y']:
-                    if  b['x'] == x-1:
+                        riskyMove += ['down']
+                if head['y'] == y:
+                    if head['x']+2 == x:
                         left = 0
-                        if 'left' in riskyMove:
-                            riskyMove.remove('left')
-                    elif  b['x'] == x+1:
+                        riskyMove += ['left']
+                    if head['x']-2 == x:
                         right = 0
-                        if 'right' in riskyMove:
-                            riskyMove.remove('right')
-            i+=1
+                        riskyMove += ['right']
+                if head['x']+1 == x:
+                    if head['y']+1 == y:
+                        up = 0
+                        riskyMove += ['up']
+                        left = 0
+                        riskyMove += ['left']
+                    if head['y']-1 == y:
+                        down = 0
+                        riskyMove += ['down']
+                        left = 0
+                        riskyMove += ['left']
+                if head['x']-1 == x:
+                    if head['y']+1 == y:
+                        up = 0
+                        riskyMove += ['up']
+                        right = 0
+                        riskyMove += ['right']
+                    if head['y']-1 == y:
+                        down = 0
+                        riskyMove += ['down']
+                        right = 0
+                        riskyMove += ['right']
+            i=1
+            for b in snake['body']:
+                if i != len(snake['body']):
+                    if x == b['x']:
+                        if b['y'] == y-1:
+                            up = 0
+                            if 'up' in riskyMove:
+                                riskyMove.remove('up')
+                        elif b['y'] == y+1:
+                            down = 0
+                            if 'down' in riskyMove:
+                                riskyMove.remove('down')
+                    elif y == b['y']:
+                        if  b['x'] == x-1:
+                            left = 0
+                            if 'left' in riskyMove:
+                                riskyMove.remove('left')
+                        elif  b['x'] == x+1:
+                            right = 0
+                            if 'right' in riskyMove:
+                                riskyMove.remove('right')
+                i+=1
     
     i=1
     for b in body:
