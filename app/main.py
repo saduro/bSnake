@@ -48,271 +48,229 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+    def createMap(board):
+       map = [[0]*board['height'] for i in range(board['width'])]
+       return map
+
+    def drawFood(foods,map):
+            for food in foods:
+                    map[food['x']][food['y']] = 1
+            return map
+
+    def drawHead(mySnake,snake,map,board):
+            if snake['id'] != mySnake['id']:
+                    headX = snake['body'][0]['x']
+                    headY = snake['body'][0]['y']
+                    if len(snake['body'])< len(mySnake['body']):
+                            map[headX][headY] = 4
+                            if headX != board['width'] -1:
+                                    if map[headX+1][headY] < 2:
+                                            map[headX+1][headY] = 2
+                            if headX != 0:
+                                    if map[headX-1][headY] < 2:
+                                            map[headX-1][headY] = 2
+                            if headY != board['height']-1:
+                                    if map[headX][headY+1] < 2:
+                                            map[headX][headY+1] = 2
+                            if headY != 0:
+                                    if map[headX][headY-1] < 2:
+                                            map[headX][headY-1] = 2
+                    else:
+                            map[headX][headY] = 4
+                            if headX != board['width']-1:
+                                    if map[headX+1][headY] < 3:
+                                            map[headX+1][headY] = 3
+                            if headX != 0:
+                                    if map[headX-1][headY] < 3:
+                                            map[headX-1][headY] = 3
+                            if headY != board['height']-1:
+                                    if map[headX][headY+1] < 3:
+                                            map[headX][headY+1] = 3
+                            if headY != 0:
+                                    if map[headX][headY-1] < 3:
+                                            map[headX][headY-1] = 3
+            return map
+
+    def drawSnakes(mySnake,board,map):
+            for snake in board['snakes']:
+                    for bodyBits in snake['body']:
+                            map[bodyBits['x']][bodyBits['y']] = 5
+                    map = drawHead(mySnake,snake,map,board)
+            return map
+
+    def getMap(board,mySnake):
+            map = createMap(board)
+            map = drawFood(board['food'],map)
+            map = drawSnakes(mySnake,board,map)
+            return map
+
+    def evalMinDirection(directions,xMinDistance,yMinDistance):
+            if xMinDistance == 0:
+                    if yMinDistance < 0:
+                            directions['up'] += 20
+                    else:
+                            directions['down'] += 20
+            elif yMinDistance == 0:
+                    if xMinDistance < 0:
+                            directions['left'] += 20
+                    else:
+                            directions['right'] += 20
+            elif abs(yMinDistance) < abs(xMinDistance):
+                    if xMinDistance < 0:
+                            directions['left'] += 20
+                    else:
+                            directions['right'] += 20
+                    if yMinDistance < 0:
+                            directions['up'] += 10
+                    else:
+                            directions['down'] += 10
+            else:
+                    if xMinDistance < 0:
+                            directions['left'] += 10
+                    else:
+                            directions['right'] += 10
+                    if yMinDistance < 0:
+                            directions['up'] += 20
+                    else:
+                            directions['down'] += 20
+            return directions
+
+    def evalFood(foods,directions,head):
+            minDistance = 1000000000
+            for food in foods:
+                    xDistance = food['x']-head['x']
+                    yDistance = food['y']-head['y']
+                    distance = abs(xDistance)+abs(yDistance)
+                    if distance <= minDistance:
+                            minDistance = distance
+                            xMinDistance = xDistance
+                            yMinDistance = yDistance
+            directions = evalMinDirection(directions,xMinDistance,yMinDistance)
+            return directions
+
+    def evalImediateKill(directions,head,map,board):
+            if head['x'] != board['width']-1:
+                    if map[head['x']+1][head['y']] == 2:
+                            directions['right'] += 30
+            if head['x'] != 0:
+                    if map[head['x']-1][head['y']] == 2:
+                            directions['left'] += 30
+            if head['y'] != board['height']-1:
+                    if map[head['x']][head['y']+1] == 2:
+                            directions['down'] += 30
+            if head['y'] != 0:
+                    if map[head['x']][head['y']-1] == 2:
+                            directions['up'] += 30
+            return directions
+
+    def evalLongKill(directions,snakes,mySnake):
+            minDistance = 1000000000
+            for snake in snakes:
+                    if snake['id'] != mySnake['id']:
+                            xDistance = snake['body'][0]['x']-mySnake['body'][0]['x']
+                            yDistance = snake['body'][0]['y']-mySnake['body'][0]['y']
+                            distance = abs(xDistance)+abs(yDistance)
+                            if distance <= minDistance:
+                                    minDistance = distance
+                                    xMinDistance = xDistance
+                                    yMinDistance = yDistance
+            directions = evalMinDirection(directions,xMinDistance,yMinDistance)
+            return directions
+
+    def evalDanger(directions,head,map,board):
+            if head['x'] != board['width']-1:
+                    if map[head['x']+1][head['y']] > 3:
+                            directions['right'] -= 160
+                    elif map[head['x']+1][head['y']] > 2:
+                            directions['right'] -= 60
+            else:
+                    directions['right'] -= 160
+            if head['x'] != 0:
+                    if map[head['x']-1][head['y']] > 3:
+                            directions['left'] -= 160
+                    elif map[head['x']-1][head['y']] > 2:
+                            directions['left'] -= 60
+            else:
+                    directions['left'] -= 160
+            if head['y'] != board['height']-1:
+                    if map[head['x']][head['y']+1] > 3:
+                            directions['down'] -= 160
+                    elif map[head['x']][head['y']+1] > 2:
+                            directions['down'] -= 60
+            else:
+                    directions['down'] -= 160
+            if head['y'] != 0:
+                    if map[head['x']][head['y']-1] > 3:
+                            directions['up'] -= 160
+                    elif map[head['x']][head['y']-1] > 2:
+                            directions['up'] -= 60
+            else:
+                    directions['up'] -= 160
+            return directions
+
+    def compareSize(mySnake,snakes):
+            info = 1
+            for snake in snakes:
+                    if len(mySnake['body'])<= len(snake['body']):
+                            info = 0
+            return info
+
+    def getArea(x,y,board,map,area):
+            if x >= 0 and y >= 0 and x <= board['width']-1 and y <= board['height']-1:
+                    if map[x][y]!= 8:
+                            if map[x][y] < 3:
+                                    map[x][y] = 8
+                                    area += 1 + getArea(x+1,y,board,map,area) + getArea(x-1,y,board,map,area) + getArea(x,y+1,board,map,area) + getArea(x,y-1,board,map,area)
+                            else:
+                                    return 0
+                    else:
+                           return 0 
+            else:
+                    return 0
+            return area
+
+    def evalSpace(mySnake,board,directions):
+            area = 0
+            map = getMap(board,mySnake)
+            left = getArea(mySnake['body'][0]['x']-1,mySnake['body'][0]['y'],board,map,area)
+            map = getMap(board,mySnake)
+            right = getArea(mySnake['body'][0]['x']+1,mySnake['body'][0]['y'],board,map,area)
+            map = getMap(board,mySnake)
+            down = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']+1,board,map,area)
+            map = getMap(board,mySnake)
+            up = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']-1,board,map,area)
+            if left < len(mySnake['body']):
+                    directions['left'] -= 60
+            if right < len(mySnake['body']):
+                    directions['right'] -= 60
+            if down < len(mySnake['body']):
+                    directions['down'] -= 60
+            if up < len(mySnake['body']):
+                    directions['up'] -= 60
+            return directions
+
+
+    def getNextMove(directions,mySnake,map,board):
+            bigEnough = compareSize(mySnake,board['snakes'])
+            if len(board['food']) != 0 and mySnake['health'] < 40 and not bigEnough:
+                    directions = evalFood(board['food'],directions,mySnake['body'][0])
+            directions = evalImediateKill(directions,mySnake['body'][0],map,board)
+            if len(board['snakes']) < 3 and bigEnough:
+                    directions = evalLongKill(directions,board['snakes'],mySnake)
+            directions = evalDanger(directions,mySnake['body'][0],map,board)
+            directions = evalSpace(mySnake,board,directions)
+            return (directions)
 
     """
     TODO: Using the data from the endpoint request object, your
             snake AI must choose a direction to move in.
     """
     print(json.dumps(data))
-    myId = data['you']['id']
-    turn = data['turn']
-    body = data['you']['body']
-    snakes = data['board']['snakes']
-    foods = data['board']['food']
-    moveOption = []
-    riskyMove = []
-    x = body[0]['x']
-    y = body[0]['y']
-    xLimit = data['board']['width'] - 1
-    yLimit = data['board']['height'] - 1
-    longuestSnake = 1
-    food = 1
-    left = 1
-    right = 1
-    up = 1
-    down = 1
-    hungry = 0
-    
-    if data['you']['health']<50:
-        hungry = 1
-    
-    for snake in snakes:
-        if snake['id'] != myId:
-            if len(snake['body']) >= len(body):
-                longuestSnake = 0
-                head = snake['body'][0]
-                if head['x'] == x:
-                    if head['y']+2 == y:
-                        up = 0
-                        riskyMove += ['up']
-                    elif head['y']-2 == y:
-                        down = 0
-                        riskyMove += ['down']
-                if head['y'] == y:
-                    if head['x']+2 == x:
-                        left = 0
-                        riskyMove += ['left']
-                    if head['x']-2 == x:
-                        right = 0
-                        riskyMove += ['right']
-                if head['x']+1 == x:
-                    if head['y']+1 == y:
-                        up = 0
-                        riskyMove += ['up']
-                        left = 0
-                        riskyMove += ['left']
-                    if head['y']-1 == y:
-                        down = 0
-                        riskyMove += ['down']
-                        left = 0
-                        riskyMove += ['left']
-                if head['x']-1 == x:
-                    if head['y']+1 == y:
-                        up = 0
-                        riskyMove += ['up']
-                        right = 0
-                        riskyMove += ['right']
-                    if head['y']-1 == y:
-                        down = 0
-                        riskyMove += ['down']
-                        right = 0
-                        riskyMove += ['right']
-            i=1
-            for b in snake['body']:
-                if i != len(snake['body']):
-                    if x == b['x']:
-                        if b['y'] == y-1:
-                            up = 0
-                            if 'up' in riskyMove:
-                                riskyMove.remove('up')
-                        elif b['y'] == y+1:
-                            down = 0
-                            if 'down' in riskyMove:
-                                riskyMove.remove('down')
-                    elif y == b['y']:
-                        if  b['x'] == x-1:
-                            left = 0
-                            if 'left' in riskyMove:
-                                riskyMove.remove('left')
-                        elif  b['x'] == x+1:
-                            right = 0
-                            if 'right' in riskyMove:
-                                riskyMove.remove('right')
-                i+=1
-    
-    i=1
-    for b in body:
-        if i != len(body):
-            if x == b['x']:
-                if b['y'] == y-1:
-                    up = 0
-                    if 'up' in riskyMove:
-                        riskyMove.remove('up')
-                elif b['y'] == y+1:
-                    down = 0
-                    if 'down' in riskyMove:
-                        riskyMove.remove('down')
-            elif y == b['y']:
-                if  b['x'] == x-1:
-                    left = 0
-                    if 'left' in riskyMove:
-                        riskyMove.remove('left')
-                elif  b['x'] == x+1:
-                    right = 0
-                    if 'right' in riskyMove:
-                        riskyMove.remove('right')
-        i+=1
-    
-    minDistance = 1000000000
-    if len(foods) != 0:
-        for f in foods:
-            xDistance = f['x']-x
-            yDistance = f['y']-y
-            distance = abs(xDistance)+abs(yDistance)
-            if distance <= minDistance:
-                minDistance = distance
-                xFoodDistance = xDistance
-                yFoodDistance = yDistance
-    else:
-        food = 0
-    
-    if x and left:
-        moveOption += ['left']
-    if x != xLimit and right:
-        moveOption += ['right']
-    if y and up:
-        moveOption += ['up']
-    if y != yLimit and down:
-        moveOption += ['down']
-    
-    if food and (not longuestSnake or hungry):
-        if xFoodDistance == 0:
-            if yFoodDistance < 0:
-                if 'up' in moveOption:
-                    direction = 'up'
-                else:
-                    if len(moveOption):
-                        direction = random.choice(moveOption)
-                    else:
-                       direction = random.choice(riskyMove) 
-            else:
-                if 'down' in moveOption:
-                    direction = 'down'
-                else:
-                    if len(moveOption):
-                        direction = random.choice(moveOption)
-                    else:
-                       direction = random.choice(riskyMove) 
-        elif yFoodDistance == 0:
-            if xFoodDistance < 0:
-                if 'left' in moveOption:
-                    direction = 'left'
-                else:
-                    if len(moveOption):
-                        direction = random.choice(moveOption)
-                    else:
-                       direction = random.choice(riskyMove) 
-            else:
-                if 'right' in moveOption:
-                    direction = 'right'
-                else:
-                    if len(moveOption):
-                        direction = random.choice(moveOption)
-                    else:
-                        direction = random.choice(riskyMove) 
-        elif abs(xFoodDistance) < abs(yFoodDistance):
-            if xFoodDistance < 0:
-                if 'left' in moveOption:
-                    direction = 'left'
-                else:
-                    if yFoodDistance < 0:
-                        if 'up' in moveOption:
-                            direction = 'up'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove) 
-                    else:
-                        if 'down' in moveOption:
-                            direction = 'down'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove) 
-            else:
-                if 'right' in moveOption:
-                    direction = 'right'
-                else:
-                    if yFoodDistance < 0:
-                        if 'up' in moveOption:
-                            direction = 'up'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove) 
-                    else:
-                        if 'down' in moveOption:
-                            direction = 'down'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove) 
-        elif abs(yFoodDistance) < abs(xFoodDistance):
-            if yFoodDistance < 0:
-                if 'up' in moveOption:
-                    direction = 'up'
-                else:
-                    if xFoodDistance < 0:
-                        if 'left' in moveOption:
-                            direction = 'left'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove) 
-                    else:
-                        if 'right' in moveOption:
-                            direction = 'right'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove)
-            else:
-                if 'down' in moveOption:
-                    direction = 'down'
-                else:
-                    if xFoodDistance < 0:
-                        if 'left' in moveOption:
-                            direction = 'left'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove)
-                    else:
-                        if 'right' in moveOption:
-                            direction = 'right'
-                        else:
-                            if len(moveOption):
-                                direction = random.choice(moveOption)
-                            else:
-                                direction = random.choice(riskyMove)
-        else:
-            if len(moveOption):
-                direction = random.choice(moveOption)
-            else:
-                direction = random.choice(riskyMove)
-    else:
-        if len(moveOption):
-            direction = random.choice(moveOption)
-        else:
-            direction = random.choice(riskyMove)
-    
+    directions = {'left':0,'up':0,'right':0,'down':0}
+
+    map = getMap(data['board'],data['you'])
+    directions = getNextMove(directions,data['you'],map,data['board'])
+    direction = max(directions, key=directions.get)
 
     return move_response(direction)
 
