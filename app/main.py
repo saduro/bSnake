@@ -218,7 +218,7 @@ def move():
     def getArea(x,y,board,map,area):
             if x >= 0 and y >= 0 and x <= board['width']-1 and y <= board['height']-1:
                     if map[x][y]!= 8:
-                            if map[x][y] < 3:
+                            if map[x][y] < 4:
                                     map[x][y] = 8
                                     area += 1 + getArea(x+1,y,board,map,area) + getArea(x-1,y,board,map,area) + getArea(x,y+1,board,map,area) + getArea(x,y-1,board,map,area)
                             else:
