@@ -252,7 +252,7 @@ def move():
 
     def getNextMove(directions,mySnake,map,board):
             bigEnough = compareSize(mySnake,board['snakes'])
-            if len(board['food']) != 0 and mySnake['health'] < 40 and not bigEnough:
+            if len(board['food']) != 0 and (mySnake['health'] < 40 or not bigEnough):
                     directions = evalFood(board['food'],directions,mySnake['body'][0])
             directions = evalImediateKill(directions,mySnake['body'][0],map,board)
             if len(board['snakes']) < 3 and bigEnough:
