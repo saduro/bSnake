@@ -211,9 +211,9 @@ def move():
     def compareSize(mySnake,snakes):
             info = 1
             for snake in snakes:
-                
+                if snake['id'] != mySnake['id']:
                     if len(mySnake['body'])<= len(snake['body']):
-                            info = 0
+                        info = 0
             return info
 
     def getArea(x,y,board,map,area):
