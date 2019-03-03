@@ -212,8 +212,7 @@ def move():
             info = 1
             for snake in snakes:
                   if len(mySnake['body'])<= len(snake['body']):
-                        if snake['id'] != mySnake['id']:
-                                info = 0
+                        info = 0
             return info
 
     def getArea(x,y,board,map,area):
