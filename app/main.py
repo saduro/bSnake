@@ -210,8 +210,9 @@ def move():
 
     def compareSize(snakes,mySnake):
             info = 1
+            id = mySnake['id']
             for snake in snakes:
-                if snake['id'] != 1:
+                if snake['id'] != id:
                     if len(mySnake['body'])<= len(snake['body']):
                         info = 0
             return info
