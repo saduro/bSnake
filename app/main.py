@@ -231,13 +231,14 @@ def move():
 
     def evalSpace(mySnake,board,directions):
             area = 0
-            map = getMap(board,mySnake)
+            mapOg = getMap(board,mySnake)
+            map = mapOg
             left = getArea(mySnake['body'][0]['x']-1,mySnake['body'][0]['y'],board,map,area)
-            map = getMap(board,mySnake)
+            map = mapOg
             right = getArea(mySnake['body'][0]['x']+1,mySnake['body'][0]['y'],board,map,area)
-            map = getMap(board,mySnake)
+            map = mapOg
             down = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']+1,board,map,area)
-            map = getMap(board,mySnake)
+            map = mapOg
             up = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']-1,board,map,area)
             if left < len(mySnake['body']):
                     directions['left'] -= 60
