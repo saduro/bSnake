@@ -209,13 +209,11 @@ def move():
             return directions
 
     def compareSize(snakes,mySnake):
-            info = 1
-            id = mySnake['id']
             for snake in snakes:
-                if snake['id'] != id:
+                if snake['id'] != mySnake['id']:
                     if len(mySnake['body'])<= len(snake['body']):
-                        info = 0
-            return info
+                        return 0
+            return 1
 
     def getArea(x,y,board,map,area):
             if x >= 0 and y >= 0 and x <= board['width']-1 and y <= board['height']-1:
