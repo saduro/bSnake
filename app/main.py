@@ -231,6 +231,7 @@ def move():
 
     def evalSpace(mySnake,board,directions):
             area = 0
+            map = getMap(board,mySnake)
             left = getArea(mySnake['body'][0]['x']-1,mySnake['body'][0]['y'],board,map,area)
             map = getMap(board,mySnake)
             right = getArea(mySnake['body'][0]['x']+1,mySnake['body'][0]['y'],board,map,area)
