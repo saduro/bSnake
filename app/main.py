@@ -208,12 +208,12 @@ def move():
                     directions['up'] -= 160
             return directions
 
-    def compareSize(snakes,mySnake):
+    def compareSize(mySnake,snakes):
+            info = 1
             for snake in snakes:
-               
                     if len(mySnake['body'])<= len(snake['body']):
-                        return 0
-            return 1
+                            info = 0
+            return info
 
     def getArea(x,y,board,map,area):
             if x >= 0 and y >= 0 and x <= board['width']-1 and y <= board['height']-1:
@@ -231,14 +231,13 @@ def move():
 
     def evalSpace(mySnake,board,directions):
             area = 0
-            mapOg = getMap(board,mySnake)
-            map = mapOg
+            map = getMap(board,mySnake)
             left = getArea(mySnake['body'][0]['x']-1,mySnake['body'][0]['y'],board,map,area)
-            map = mapOg
+            map = getMap(board,mySnake)
             right = getArea(mySnake['body'][0]['x']+1,mySnake['body'][0]['y'],board,map,area)
-            map = mapOg
+            map = getMap(board,mySnake)
             down = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']+1,board,map,area)
-            map = mapOg
+            map = getMap(board,mySnake)
             up = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']-1,board,map,area)
             if left < len(mySnake['body']):
                     directions['left'] -= 60
@@ -252,7 +251,7 @@ def move():
 
 
     def getNextMove(directions,mySnake,map,board):
-            bigEnough = compareSize(board['snakes'],mySnake)
+            bigEnough = compareSize(mySnake,board['snakes'])
             if len(board['food']) != 0 and (mySnake['health'] < 40 or not bigEnough):
                     directions = evalFood(board['food'],directions,mySnake['body'][0])
             directions = evalImediateKill(directions,mySnake['body'][0],map,board)
