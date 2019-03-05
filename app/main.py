@@ -239,13 +239,13 @@ def move():
             down = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']+1,board,map,area)
             map = getMap(board,mySnake)
             up = getArea(mySnake['body'][0]['x'],mySnake['body'][0]['y']-1,board,map,area)
-            if left < len(mySnake['body']):
+            if left < len(mySnake['body'])/2:
                     directions['left'] -= 60
-            if right < len(mySnake['body']):
+            if right < len(mySnake['body'])/2:
                     directions['right'] -= 60
-            if down < len(mySnake['body']):
+            if down < len(mySnake['body'])/2:
                     directions['down'] -= 60
-            if up < len(mySnake['body']):
+            if up < len(mySnake['body'])/2:
                     directions['up'] -= 60
             return directions
 
